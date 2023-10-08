@@ -1,7 +1,7 @@
 import { Home } from "../components/pages/Home";
 import { Page404 } from "../components/pages/Page404";
 import { Setting } from "../components/pages/Setting";
-import { UserCard } from "../components/pages/UserCard";
+import { UserCardManagement } from "../components/pages/UserCardManagement";
 
 export const HomeRoutes = [
 	{
@@ -10,7 +10,7 @@ export const HomeRoutes = [
 	},
 	{
 		path: "/user_card",
-		children: <UserCard />
+		children: <UserCardManagement />
 	},
 	{
 		path: "/setting",
