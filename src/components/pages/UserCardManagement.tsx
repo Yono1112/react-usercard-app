@@ -5,8 +5,10 @@ import { UserCard } from "../organisms/user/UserCard"
 import { useAllUsers } from "../../hooks/useAllUsers";
 
 export const UserCardManagement: FC = memo(() => {
-	const { getUsers, users, loading} = useAllUsers();
-	useEffect(() => getUsers(), []);
+	const { users, loading, getUsers} = useAllUsers();
+	useEffect(() => {
+		getUsers();
+	}, []);
 
 	return (
 		<>
