@@ -1,18 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {  Center, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Stack, Wrap, WrapItem, useDisclosure } from "@chakra-ui/react"
+import {  Center, Spinner, Wrap, WrapItem, useDisclosure } from "@chakra-ui/react"
 import { FC, memo, useCallback, useEffect } from "react"
 import { UserCard } from "../organisms/user/UserCard"
 import { useAllUsers } from "../../hooks/useAllUsers";
 import { UserDetailModal } from "../organisms/user/UserDetailModal";
+import { useSelectUser } from "../../hooks/useSelectUser";
 
 export const UserCardManagement: FC = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { users, loading, getUsers} = useAllUsers();
+	const { onSelectUser, selectUser } = useSelectUser();
 	useEffect(() => {
 		getUsers();
 	}, []);
 
-	const onClickUser = useCallback(() => onOpen(), []);
+	const onClickUser = useCallback((id: number) => {
+		onSelectUser({ onOpen, id, users})
+	}, [users, onSelectUser, onOpen]);
 
 	return (
 		<>
@@ -25,6 +29,7 @@ export const UserCardManagement: FC = memo(() => {
 					{users.map((user) => (
 						<WrapItem key={user.id} mx="auto">
 							<UserCard
+								id={user.id}
 								imageUrd="https://source.unsplash.com/TaCk3NspYe0"
 								userName={user.username}
 								fullName={user.name}
@@ -34,7 +39,7 @@ export const UserCardManagement: FC = memo(() => {
 					))}
 				</Wrap>
 			)}
-			<UserDetailModal isOpen={isOpen} onClose={onClose} />
+			<UserDetailModal user={selectUser} isOpen={isOpen} onClose={onClose} />
 		</>
 	)
 })
