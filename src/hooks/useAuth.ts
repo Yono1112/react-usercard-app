@@ -20,7 +20,8 @@ export const useAuth = () => {
 		setLoding(true);
 		axios.get<User>(`https://jsonplaceholder.typicode.com/users/${id}`).then((res) => {
 			if (res.data && res.data.id) {
-				setLoginUser(res.data);
+				const isAdmin = res.data.id === 10 ? true : false;
+				setLoginUser({...res.data, isAdmin});
 				ShowMessage({ title: "ログインしました", status: "success"});
 				navigate("/home");
 			} else {
