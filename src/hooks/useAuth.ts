@@ -4,11 +4,13 @@ import { useCallback, useState } from "react"
 import { User } from "../types/api/user";
 import { useNavigate } from "react-router-dom";
 import { useMessage } from "./useMessage";
+import { useLoginUser } from "./useLoginUser";
 
 export const useAuth = () => {
 	const navigate = useNavigate();
 	const [ loading, setLoding ] = useState(false);
 	const { ShowMessage } = useMessage();
+	const { setLoginUser } = useLoginUser();
 
 	const login = useCallback((id: string) => {
 		if (!id.trim()) {
@@ -18,6 +20,7 @@ export const useAuth = () => {
 		setLoding(true);
 		axios.get<User>(`https://jsonplaceholder.typicode.com/users/${id}`).then((res) => {
 			if (res.data && res.data.id) {
+				setLoginUser(res.data);
 				ShowMessage({ title: "ログインしました", status: "success"});
 				navigate("/home");
 			} else {
@@ -27,5 +30,5 @@ export const useAuth = () => {
 		.catch(() => ShowMessage({ title: "ユーザーが見つかりません", status: "error"}))
 		.finally(() => setLoding(false));
 	}, []);
-	return { login, loading };
+	return { login, loading , setLoginUser};
 }
