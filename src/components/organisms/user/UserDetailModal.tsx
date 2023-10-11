@@ -24,12 +24,17 @@ export const UserDetailModal: FC<Props> = memo((props) => {
 		setPhone(user?.phone ?? '');
 	}, [user])
 
-	const onClickUpdate = () => alert();
-
 	const onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
 	const onChangeName = (e: ChangeEvent<HTMLInputElement>) => setName(e.target.value);
 	const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
 	const onChangePhone = (e: ChangeEvent<HTMLInputElement>) => setPhone(e.target.value);
+
+	const onClickUpdate = () => {
+		console.log(username);
+		console.log(name);
+		console.log(email);
+		console.log(phone);
+	};
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} autoFocus={false}>
